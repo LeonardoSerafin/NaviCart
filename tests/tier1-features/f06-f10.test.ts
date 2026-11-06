@@ -5,18 +5,21 @@ import { evaluateTouchTarget, extractInteractiveElements } from '../helpers/ergo
 
 // ── Feature 6: Home Language Switcher ──
 describe('Feature 6: Home Language Switcher', () => {
-  it('F06-1: Header includes bilingual toggle controls for IT and EN', () => {
-    const html = renderAppRoute('/home');
-    expect(html).toContain('IT');
-    expect(html).toContain('EN');
+  it('F06-1: Language toggle lives only in Account (IT and EN), not on the Home header', () => {
+    const account = renderAppRoute('/account');
+    expect(account).toContain('IT');
+    expect(account).toContain('EN');
+    const home = renderAppRoute('/home');
+    expect(home).not.toContain('Language selection');
+    expect(home).not.toContain('aria-label="English"');
   });
 
   it('F06-2: Language toggle buttons provide minimum 44x44px touch target frame', () => {
-    const html = renderAppRoute('/home');
+    const html = renderAppRoute('/account');
     const controls = extractInteractiveElements(html);
     const langControls = controls.filter(c => c.includes('IT') || c.includes('EN') || c.includes('language'));
     // Touch targets must be >= 44px or have touch expansion
-    const hasCompliantLangButtons = html.includes('min-h-[44px]') || html.includes('min-w-[44px]') || html.includes('py-2.5');
+    const hasCompliantLangButtons = html.includes('min-h-[44px]') || html.includes('min-w-[44px]') || html.includes('py-2.5') || html.includes('min-h-[48px]');
     expect(hasCompliantLangButtons).toBe(true);
   });
 
@@ -27,8 +30,8 @@ describe('Feature 6: Home Language Switcher', () => {
   });
 
   it('F06-4: Active language button displays high-contrast visual focus/active indicator', () => {
-    const html = renderAppRoute('/home', { language: 'it' });
-    expect(html).toMatch(/bg-emerald|bg-white|text-slate-900|font-bold/);
+    const html = renderAppRoute('/account', { language: 'it' });
+    expect(html).toMatch(/bg-emerald|bg-white|text-slate-900|font-bold|font-extrabold/);
   });
 
   it('F06-5: Language state persists in localStorage key "navicart_language"', () => {
@@ -84,7 +87,7 @@ describe('Feature 8: Store Catalog Category/Sale Filters', () => {
 
   it('F08-2: Filter pill interactive targets satisfy minimum 44px touch ergonomics', () => {
     const html = renderAppRoute('/store/iperpoli-cittadella');
-    const hasPillTouchTarget = html.includes('min-h-[44px]') || html.includes('min-h-[40px]') || html.includes('py-2.5');
+    const hasPillTouchTarget = html.includes('min-h-[44px]') || html.includes('min-h-[40px]') || html.includes('py-2.5') || html.includes('min-h-[48px]');
     expect(hasPillTouchTarget).toBe(true);
   });
 
