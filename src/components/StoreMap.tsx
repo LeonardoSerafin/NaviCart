@@ -344,10 +344,10 @@ export default function StoreMap({
 
   return (
     <figure
-      className={`relative w-full overflow-hidden bg-card border border-ink rounded-[10px] select-none m-0 ${fit ? 'h-full flex flex-col' : ''} ${className}`}
+      className={`relative w-full overflow-hidden bg-card border border-ink rounded-[10px] select-none m-0 ${fit ? 'h-full flex flex-col border-x-0 rounded-none' : ''} ${className}`}
     >
       {/* ── Cartiglio della pianta ── */}
-      <figcaption className="flex items-center justify-between gap-3 px-3.5 py-2.5 border-b border-ink bg-card">
+      {!fit && <figcaption className="flex items-center justify-between gap-3 px-3.5 py-2.5 border-b border-ink bg-card">
         <div className="flex items-baseline gap-2 min-w-0">
           <span className="w-2 h-2 rounded-full bg-tomato flex-shrink-0 translate-y-[-1px]" aria-hidden="true" />
           <span className="font-display text-[15px] font-semibold italic text-ink truncate">{store.name}</span>
@@ -355,7 +355,7 @@ export default function StoreMap({
         <span className="text-[11px] font-bold uppercase tracking-[0.14em] text-ink-soft whitespace-nowrap">
           {t('storeView')}
         </span>
-      </figcaption>
+      </figcaption>}
 
       <svg
         viewBox={`0 0 ${W} ${H}`}
@@ -686,8 +686,8 @@ export default function StoreMap({
         )}
       </svg>
 
-      {/* ── Legenda ── */}
-      <div className={`${fit ? 'flex-shrink-0 py-1.5' : 'py-2.5'} flex items-center flex-wrap gap-x-4 gap-y-1 px-3.5 border-t border-rule bg-card text-[11px] font-semibold text-ink-soft`}>
+      {/* ── Legenda (nascosta nella vista a tutto schermo: i simboli sono intuitivi) ── */}
+      {!fit && <div className={`${fit ? 'flex-shrink-0 py-1.5' : 'py-2.5'} flex items-center flex-wrap gap-x-4 gap-y-1 px-3.5 border-t border-rule bg-card text-[11px] font-semibold text-ink-soft`}>
         <span className="inline-flex items-center gap-1.5">
           <span className="w-3 h-3 rounded-full bg-ink inline-block" aria-hidden="true" />
           {stateLabels.todo}
@@ -708,7 +708,7 @@ export default function StoreMap({
           <span className="inline-block w-5 h-[3px] rounded bg-tomato" aria-hidden="true" />
           {it ? 'Percorso' : 'Route'}
         </span>
-      </div>
+      </div>}
     </figure>
   );
 }

@@ -190,7 +190,7 @@ export default function ListDetailPage() {
         <section className="space-y-3">
           {/* Mappa + tappa corrente stanno in una sola schermata: niente scorrimento per segnare un prodotto */}
           <div
-            className={route ? 'flex flex-col gap-2.5' : ''}
+            className={route ? 'flex flex-col gap-2 -mx-5' : ''}
             style={route ? { height: 'calc(100dvh - 8.4rem - env(safe-area-inset-bottom, 0px))', minHeight: 430 } : undefined}
           >
             <div className={route ? 'flex-1 min-h-0' : ''}>
@@ -211,6 +211,7 @@ export default function ListDetailPage() {
             </div>
 
             {route && (
+              <div className="px-2.5">
               <RouteStats
                 part="stop"
                 route={route}
@@ -221,6 +222,7 @@ export default function ListDetailPage() {
                 }}
                 onTogglePickItem={(item) => handleToggleCheck(item.id)}
               />
+              </div>
             )}
           </div>
 

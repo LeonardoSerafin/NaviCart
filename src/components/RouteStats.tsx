@@ -67,60 +67,43 @@ export default function RouteStats({
       {/* ── Prossima fermata: un biglietto da staccare ── */}
       {part !== 'summary' && currentItem && (
         <div className="slip border-ink overflow-hidden">
-          <div className="bg-ink text-paper px-4 py-2 flex items-center justify-between gap-3">
-            <span className="flex items-center gap-2 font-extrabold uppercase tracking-[0.12em] text-[11px]">
-              <span className="relative flex h-2.5 w-2.5" aria-hidden="true">
+          <div className="bg-ink text-paper px-3.5 py-1 flex items-center justify-between gap-3">
+            <span className="flex items-center gap-2 font-extrabold uppercase tracking-[0.1em] text-[11px]">
+              <span className="relative flex h-2 w-2" aria-hidden="true">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-mustard opacity-75" />
-                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-mustard" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-mustard" />
               </span>
               <span>{`${currentItem.checked ? t('pickedBadge').toUpperCase() : t('nextStopTitle')} · ${t('stepOf')} ${stepNumber} ${t('of')} ${route.turnInstructions.length}`}</span>
             </span>
             <span className="font-bold text-[11px] text-paper/90 truncate">{currentText?.aisleName}</span>
           </div>
 
-          <div className="px-3.5 py-3 flex items-start gap-3">
-            {/* numero della tappa */}
-            <div className="flex flex-col items-center flex-shrink-0 w-12">
-              <span className="font-display text-[38px] leading-[0.9] font-semibold text-tomato tabular-nums">
-                {stepNumber}
-              </span>
-              <span className="plate w-11 h-11 text-[24px] mt-1.5">{currentItem.product.icon}</span>
-            </div>
-
+          <div className="px-3.5 pt-2 pb-1 flex items-center gap-3">
+            <span className="font-display text-[34px] leading-none font-semibold text-tomato tabular-nums w-8 text-center flex-shrink-0">
+              {stepNumber}
+            </span>
+            <span className="text-[24px] leading-none flex-shrink-0" aria-hidden="true">{currentItem.product.icon}</span>
             <div className="flex-1 min-w-0">
-              <div className="text-[11.5px] text-ink-soft font-extrabold uppercase tracking-[0.12em]">
-                {currentItem.product.brand}
-              </div>
-              <h4 className="font-display text-[20px] font-semibold text-ink leading-tight text-balance mt-0.5">
+              <h4 className="font-display text-[17px] font-semibold text-ink leading-tight truncate">
                 {currentText?.name}
               </h4>
-              <p className="text-[12.5px] text-ink-soft font-semibold mt-2 flex items-start gap-1.5">
-                <MapPin className="w-3.5 h-3.5 mt-0.5 flex-shrink-0 text-tomato" aria-hidden="true" />
-                <span>
-                  {`${currentText?.aisleName} · ${getTranslatedShelfSide(currentItem.product.shelfSide)} (${currentItem.product.shelfSection})`}
+              <p className="text-[12px] text-ink-soft font-semibold truncate flex items-center gap-1">
+                <MapPin className="w-3 h-3 flex-shrink-0 text-tomato" aria-hidden="true" />
+                <span className="truncate">
+                  {`${getTranslatedShelfSide(currentItem.product.shelfSide)} (${currentItem.product.shelfSection})`}
                 </span>
               </p>
             </div>
-
-            <div className="text-right flex-shrink-0">
-              <span className="font-display text-[20px] font-semibold text-ink tabular-nums leading-none block">
-                €{currentItem.product.price.toFixed(2)}
-              </span>
-              {currentItem.product.originalPrice && (
-                <div className="text-[11px] text-tomato font-semibold line-through tabular-nums mt-1">
-                  €{currentItem.product.originalPrice.toFixed(2)}
-                </div>
-              )}
-            </div>
+            <span className="font-display text-[18px] font-semibold text-ink tabular-nums leading-none flex-shrink-0">
+              €{currentItem.product.price.toFixed(2)}
+            </span>
           </div>
 
-          <div className="perf" aria-hidden="true" />
-
-          <div className="p-2.5 flex items-center gap-2">
+          <div className="px-2.5 pb-2.5 pt-1 flex items-center gap-2">
             <button
               type="button"
               onClick={() => onTogglePickItem?.(currentItem)}
-              className={`btn ${currentItem.checked ? 'btn-line' : 'btn-tomato'} flex-1 min-h-[46px] py-2 px-4 text-[14px] motion-reduce:transition-none`}
+              className={`btn ${currentItem.checked ? 'btn-line' : 'btn-tomato'} flex-1 min-h-[44px] py-1.5 px-4 text-[14px] motion-reduce:transition-none`}
             >
               <CheckCircle2 className="w-[18px] h-[18px] stroke-[2.2]" aria-hidden="true" />
               <span>{currentItem.checked ? t('btnUnmarkPicked') : t('btnMarkPicked')}</span>
@@ -132,7 +115,7 @@ export default function RouteStats({
                   type="button"
                   disabled={activeStopIndex <= 0}
                   onClick={() => onSelectStop?.(activeStopIndex - 1)}
-                  className="btn btn-line p-3 min-w-[44px] min-h-[44px]"
+                  className="btn btn-line p-2.5 min-w-[44px] min-h-[44px]"
                   aria-label={t('prevStop')}
                 >
                   <ChevronLeft className="w-4 h-4 stroke-[2.4]" aria-hidden="true" />
@@ -141,7 +124,7 @@ export default function RouteStats({
                   type="button"
                   disabled={activeStopIndex >= route.turnInstructions.length - 1}
                   onClick={() => onSelectStop?.(activeStopIndex + 1)}
-                  className="btn btn-line p-3 min-w-[44px] min-h-[44px]"
+                  className="btn btn-line p-2.5 min-w-[44px] min-h-[44px]"
                   aria-label={t('nextStop')}
                 >
                   <ChevronRight className="w-4 h-4 stroke-[2.4]" aria-hidden="true" />
