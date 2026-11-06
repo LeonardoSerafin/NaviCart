@@ -1,0 +1,188 @@
+{
+  "timestamp": "2026-11-06T12:28:54.883Z",
+  "durationMs": 547.5,
+  "total": 271,
+  "passed": 271,
+  "failed": 0,
+  "byTier": {
+    "tier1": {
+      "total": 130,
+      "passed": 130,
+      "failed": 0
+    },
+    "tier2": {
+      "total": 129,
+      "passed": 129,
+      "failed": 0
+    },
+    "tier3": {
+      "total": 8,
+      "passed": 8,
+      "failed": 0
+    },
+    "tier4": {
+      "total": 4,
+      "passed": 4,
+      "failed": 0
+    }
+  },
+  "byFeature": {
+    "1": {
+      "name": "Safe-Area Viewport & Shell",
+      "total": 10,
+      "passed": 10,
+      "failed": 0
+    },
+    "2": {
+      "name": "Design Tokens & Motion Baseline",
+      "total": 10,
+      "passed": 10,
+      "failed": 0
+    },
+    "3": {
+      "name": "Persistent Bottom Nav Bar",
+      "total": 10,
+      "passed": 10,
+      "failed": 0
+    },
+    "4": {
+      "name": "Home Store Selection",
+      "total": 10,
+      "passed": 10,
+      "failed": 0
+    },
+    "5": {
+      "name": "Home Search & Clear Control",
+      "total": 10,
+      "passed": 10,
+      "failed": 0
+    },
+    "6": {
+      "name": "Home Language Switcher",
+      "total": 10,
+      "passed": 10,
+      "failed": 0
+    },
+    "7": {
+      "name": "Store Catalog Product Cards",
+      "total": 5,
+      "passed": 5,
+      "failed": 0
+    },
+    "8": {
+      "name": "Store Catalog Category/Sale Filters",
+      "total": 15,
+      "passed": 15,
+      "failed": 0
+    },
+    "9": {
+      "name": "Store Catalog Add-to-List Modal",
+      "total": 10,
+      "passed": 10,
+      "failed": 0
+    },
+    "10": {
+      "name": "Store Catalog Source List HUD",
+      "total": 10,
+      "passed": 10,
+      "failed": 0
+    },
+    "11": {
+      "name": "My Lists Supermarket Grouping",
+      "total": 10,
+      "passed": 10,
+      "failed": 0
+    },
+    "12": {
+      "name": "My Lists Accessible List Actions",
+      "total": 10,
+      "passed": 10,
+      "failed": 0
+    },
+    "13": {
+      "name": "Create List Modal (3 Modes)",
+      "total": 10,
+      "passed": 10,
+      "failed": 0
+    },
+    "14": {
+      "name": "OCR Receipt Scanning Feedback",
+      "total": 9,
+      "passed": 9,
+      "failed": 0
+    },
+    "15": {
+      "name": "Assortment Exclusion Alert",
+      "total": 10,
+      "passed": 10,
+      "failed": 0
+    },
+    "16": {
+      "name": "List Detail Progress Bar",
+      "total": 10,
+      "passed": 10,
+      "failed": 0
+    },
+    "17": {
+      "name": "List Detail Item Checkoff",
+      "total": 10,
+      "passed": 10,
+      "failed": 0
+    },
+    "18": {
+      "name": "List Detail Quantity Steppers",
+      "total": 10,
+      "passed": 10,
+      "failed": 0
+    },
+    "19": {
+      "name": "2D SVG Map Path & Pins",
+      "total": 10,
+      "passed": 10,
+      "failed": 0
+    },
+    "20": {
+      "name": "Turn-by-Turn Route HUD",
+      "total": 10,
+      "passed": 10,
+      "failed": 0
+    },
+    "21": {
+      "name": "Add Products Navigation Link",
+      "total": 10,
+      "passed": 10,
+      "failed": 0
+    },
+    "22": {
+      "name": "Account Language Toggle",
+      "total": 10,
+      "passed": 10,
+      "failed": 0
+    },
+    "23": {
+      "name": "Account Efficiency Metrics",
+      "total": 10,
+      "passed": 10,
+      "failed": 0
+    },
+    "24": {
+      "name": "Account Reset Demo Data",
+      "total": 10,
+      "passed": 10,
+      "failed": 0
+    },
+    "25": {
+      "name": "Oxlint Warning & Dead Code Cleanup",
+      "total": 10,
+      "passed": 10,
+      "failed": 0
+    },
+    "26": {
+      "name": "Comprehensive E2E Verification",
+      "total": 10,
+      "passed": 10,
+      "failed": 0
+    }
+  },
+  "failures": []
+}

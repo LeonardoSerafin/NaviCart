@@ -1,0 +1,520 @@
+@import "tailwindcss";
+
+/* ==========================================================================
+   NaviCart — "Carta & Inchiostro"
+   Identità visiva: la lista della spesa su carta, scritta a inchiostro, con
+   il rosso pomodoro come unico colore d'azione. Forme piccole e nitide,
+   righe sottili, numeri in serif, nessun gradiente.
+   ========================================================================== */
+
+/* ── 1. Design tokens ── */
+@theme {
+  --font-sans: "Source Sans 3", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-display: "Source Serif 4", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+
+  /* Superfici */
+  --color-paper: #f4eee2;        /* fondo pagina */
+  --color-paper-deep: #e9e0ce;   /* incavi, campi, tracce */
+  --color-card: #fcfaf4;         /* foglietti / schede */
+  --color-rule: #d6cbb4;         /* righe e bordi */
+  --color-rule-strong: #b9ac90;
+
+  /* Inchiostro (testo) — tutti >= 4.5:1 su paper e card */
+  --color-ink: #1f2a24;          /* 12.8:1 */
+  --color-ink-soft: #4b574f;     /* 6.5:1 */
+  --color-ink-faint: #5a655c;    /* 5.1:1 */
+
+  /* Pomodoro — colore d'azione e percorso */
+  --color-tomato: #b03a22;       /* 5.2:1 su paper */
+  --color-tomato-deep: #8f2d19;
+  --color-tomato-tint: #f5ddd3;
+
+  /* Basilico — bio, completato, ok */
+  --color-basil: #2f5636;
+  --color-basil-tint: #dce6d2;
+
+  /* Senape — promo, territorio */
+  --color-mustard: #e3ae33;
+  --color-mustard-deep: #7a5600;
+  --color-mustard-tint: #f7e8bd;
+
+  /* Notte — fondale su desktop */
+  --color-night: #17201b;
+}
+
+/* ── 2. Base ── */
+:root {
+  color-scheme: light;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--color-ink);
+  background: var(--color-night);
+  font-feature-settings: "kern", "liga";
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-tomato);
+  outline-offset: 2px;
+}
+
+::selection {
+  background: var(--color-mustard-tint);
+  color: var(--color-ink);
+}
+
+/* grana di carta, molto leggera */
+.paper-grain {
+  background-color: var(--color-paper);
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .35  0 0 0 0 .28  0 0 0 0 .15  0 0 0 .07 0'/></filter><rect width='160' height='160' filter='url(%23n)'/></svg>");
+}
+
+/* ── 3. Utilities ── */
+@layer utilities {
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-none {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  @supports not (min-height: 100dvh) {
+    .min-h-dvh {
+      min-height: 100vh;
+    }
+    .h-dvh {
+      height: 100vh;
+    }
+  }
+
+  .pt-safe {
+    padding-top: env(safe-area-inset-top, 0px);
+  }
+  .pb-safe {
+    padding-bottom: max(0.5rem, env(safe-area-inset-bottom, 0px));
+  }
+  .pb-safe-nav {
+    padding-bottom: max(0.75rem, env(safe-area-inset-bottom, 0.75rem));
+  }
+  .safe-area-inset-bottom {
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  .min-touch-target {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .hit-target-44 {
+    position: relative;
+  }
+  .hit-target-44::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    min-width: 44px;
+    min-height: 44px;
+    width: 100%;
+    height: 100%;
+  }
+
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
+  }
+  .text-balance {
+    text-wrap: balance;
+  }
+  .text-pretty {
+    text-wrap: pretty;
+  }
+  .origin-left {
+    transform-origin: left;
+  }
+}
+
+/* ── 4. Componenti visivi ── */
+@layer components {
+  /* Foglietto */
+  .slip {
+    background: var(--color-card);
+    border: 1px solid var(--color-rule);
+    border-radius: 10px;
+  }
+  .slip-interactive {
+    transition: border-color 120ms ease-out, background-color 120ms ease-out, transform 120ms ease-out;
+  }
+  .slip-interactive:hover {
+    border-color: var(--color-ink);
+  }
+  .slip-interactive:active {
+    transform: scale(0.992);
+  }
+
+  /* Titoletto di sezione con filetto */
+  .rule-title {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    font-family: var(--font-sans);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-ink-soft);
+  }
+  .rule-title::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--color-rule-strong);
+  }
+
+  /* Perforazione stile scontrino / biglietto */
+  .perf {
+    height: 0;
+    border-top: 1.5px dashed var(--color-rule-strong);
+    position: relative;
+  }
+  .perf::before,
+  .perf::after {
+    content: "";
+    position: absolute;
+    top: -8px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--color-paper);
+    border: 1px solid var(--color-rule);
+  }
+  .perf::before {
+    left: -7px;
+    clip-path: inset(0 0 0 50%);
+  }
+  .perf::after {
+    right: -7px;
+    clip-path: inset(0 50% 0 0);
+  }
+
+  /* Puntini guida tra nome e prezzo */
+  .leader {
+    flex: 1;
+    min-width: 12px;
+    height: 0.75em;
+    border-bottom: 1.5px dotted var(--color-rule-strong);
+    transform: translateY(-0.2em);
+  }
+
+  /* Bottoni */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    border-radius: 8px;
+    border: 1.5px solid transparent;
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 120ms ease-out, color 120ms ease-out, border-color 120ms ease-out, transform 120ms ease-out;
+  }
+  .btn:active {
+    transform: translateY(1px);
+  }
+  .btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+  .btn-tomato {
+    background: var(--color-tomato);
+    color: var(--color-card);
+  }
+  .btn-tomato:hover {
+    background: var(--color-tomato-deep);
+  }
+  .btn-ink {
+    background: var(--color-ink);
+    color: var(--color-paper);
+  }
+  .btn-ink:hover {
+    background: #000;
+  }
+  .btn-line {
+    background: transparent;
+    color: var(--color-ink);
+    border-color: var(--color-ink);
+  }
+  .btn-line:hover {
+    background: var(--color-ink);
+    color: var(--color-paper);
+  }
+  .btn-quiet {
+    background: var(--color-paper-deep);
+    color: var(--color-ink);
+  }
+  .btn-quiet:hover {
+    background: var(--color-rule);
+  }
+  .btn-danger {
+    background: var(--color-tomato-deep);
+    color: var(--color-card);
+  }
+
+  /* Campi */
+  .field {
+    width: 100%;
+    background: var(--color-card);
+    border: 1.5px solid var(--color-rule-strong);
+    border-radius: 8px;
+    color: var(--color-ink);
+    font-weight: 500;
+    transition: border-color 120ms ease-out;
+  }
+  .field::placeholder {
+    color: var(--color-ink-faint);
+  }
+  .field:focus {
+    outline: none;
+    border-color: var(--color-ink);
+    box-shadow: 0 0 0 3px var(--color-mustard-tint);
+  }
+
+  /* Chip filtro */
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    border-radius: 999px;
+    border: 1.5px solid var(--color-rule-strong);
+    background: var(--color-card);
+    color: var(--color-ink);
+    font-weight: 700;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background-color 120ms ease-out, color 120ms ease-out, border-color 120ms ease-out, transform 120ms ease-out;
+  }
+  .chip:active {
+    transform: scale(0.97);
+  }
+  .chip[aria-pressed="true"],
+  .chip[aria-checked="true"] {
+    background: var(--color-ink);
+    border-color: var(--color-ink);
+    color: var(--color-paper);
+  }
+  .chip-sale[aria-pressed="true"] {
+    background: var(--color-tomato);
+    border-color: var(--color-tomato);
+    color: var(--color-card);
+  }
+  .chip-bio[aria-pressed="true"] {
+    background: var(--color-basil);
+    border-color: var(--color-basil);
+    color: var(--color-card);
+  }
+  .chip-local[aria-pressed="true"] {
+    background: var(--color-mustard);
+    border-color: var(--color-mustard);
+    color: var(--color-ink);
+  }
+
+  /* Timbro (etichette BIO / PROMO / KM0) */
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    padding: 1px 6px;
+    border-radius: 3px;
+    border: 1.5px solid currentColor;
+    line-height: 1.5;
+  }
+  .tag-sale {
+    color: var(--color-tomato);
+  }
+  .tag-bio {
+    color: var(--color-basil);
+  }
+  .tag-local {
+    color: var(--color-mustard-deep);
+  }
+
+  /* Piatto emoji */
+  .plate {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--color-paper-deep);
+    border: 1px solid var(--color-rule);
+    flex-shrink: 0;
+    user-select: none;
+  }
+
+  /* Binario progresso */
+  .track {
+    background: var(--color-paper-deep);
+    border: 1px solid var(--color-rule);
+    overflow: hidden;
+    border-radius: 999px;
+  }
+
+  /* Modale come foglio che sale dal basso */
+  .sheet-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    background: rgba(23, 32, 27, 0.55);
+  }
+  .sheet {
+    width: 100%;
+    max-width: 28rem;
+    max-height: 92dvh;
+    overflow-y: auto;
+    background: var(--color-card);
+    border-top-left-radius: 18px;
+    border-top-right-radius: 18px;
+    border: 1px solid var(--color-rule-strong);
+    border-bottom: 0;
+    padding: 0.5rem 1.25rem max(1.25rem, env(safe-area-inset-bottom, 0px));
+  }
+  .sheet-handle {
+    width: 36px;
+    height: 4px;
+    border-radius: 999px;
+    background: var(--color-rule-strong);
+    margin: 0.25rem auto 0.75rem;
+  }
+}
+
+/* ── 5. Animazioni (<= 200ms, solo transform/opacity) ── */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes scaleUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes popCheck {
+  0% {
+    transform: scale(0.85);
+  }
+  50% {
+    transform: scale(1.15);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes routeDash {
+  to {
+    stroke-dashoffset: -20px;
+  }
+}
+
+@keyframes pulseGlow {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.45;
+  }
+  50% {
+    transform: scale(1.35);
+    opacity: 0.12;
+  }
+}
+
+@keyframes scanBeam {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 150ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.animate-scaleUp {
+  animation: scaleUp 180ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.animate-popCheck {
+  animation: popCheck 150ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.animate-routeDash {
+  animation: routeDash 1.2s linear infinite;
+}
+.animate-pulseGlow {
+  animation: pulseGlow 1.6s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.animate-scanBeam {
+  animation: scanBeam 1.5s ease-in-out infinite;
+}
+
+/* SVG: il pulse lavora sul proprio centro */
+.route-walking-line {
+  animation: routeDash 1.2s linear infinite;
+}
+
+/* ── 6. Riduzione del movimento ── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .animate-fadeIn,
+  .animate-scaleUp,
+  .animate-popCheck,
+  .animate-routeDash,
+  .animate-pulseGlow,
+  .animate-scanBeam,
+  .animate-pulse,
+  .animate-spin,
+  .animate-ping,
+  .route-walking-line {
+    animation: none !important;
+    transform: none !important;
+  }
+}
