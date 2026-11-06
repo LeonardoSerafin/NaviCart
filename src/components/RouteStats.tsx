@@ -65,7 +65,7 @@ export default function RouteStats({
   return (
     <div className={`space-y-4 ${className}`}>
       {/* ── Prossima fermata: un biglietto da staccare ── */}
-      {part !== 'summary' && currentItem && (
+      {part !== 'summary' && !allPicked && currentItem && (
         <div className="slip border-ink overflow-hidden">
           <div className="bg-ink text-paper px-3.5 py-1 flex items-center justify-between gap-3">
             <span className="flex items-center gap-2 font-extrabold uppercase tracking-[0.1em] text-[11px]">
@@ -136,11 +136,24 @@ export default function RouteStats({
       )}
 
       {part !== 'summary' && allPicked && (
-        <div className="slip p-4 flex items-start gap-3 border-basil">
-          <CheckCircle2 className="w-6 h-6 text-basil flex-shrink-0 mt-0.5" aria-hidden="true" />
-          <div>
-            <div className="font-display text-[19px] font-semibold text-ink leading-tight">{t('allPickedTitle')}</div>
-            <p className="text-[13px] text-ink-soft mt-1 text-pretty">{t('allPickedBody')}</p>
+        <div className="slip border-basil overflow-hidden flex flex-col justify-center" style={{ minHeight: 136 }}>
+          <div className="px-3.5 pt-3 pb-2 flex items-center gap-3">
+            <CheckCircle2 className="w-8 h-8 text-basil flex-shrink-0" aria-hidden="true" />
+            <div className="min-w-0">
+              <div className="font-display text-[17px] font-semibold text-ink leading-tight">{t('allPickedTitle')}</div>
+              <p className="text-[12px] text-ink-soft font-semibold leading-snug">{t('allPickedBody')}</p>
+            </div>
+          </div>
+          <div className="px-2.5 pb-2.5 pt-1">
+            {currentItem && (
+              <button
+                type="button"
+                onClick={() => onTogglePickItem?.(currentItem)}
+                className="btn btn-line w-full min-h-[44px] py-1.5 px-4 text-[14px] motion-reduce:transition-none"
+              >
+                <span>{t('btnUnmarkPicked')}</span>
+              </button>
+            )}
           </div>
         </div>
       )}

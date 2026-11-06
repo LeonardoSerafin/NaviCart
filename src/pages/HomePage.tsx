@@ -8,7 +8,7 @@ import StoreStamp from '../components/StoreStamp';
 
 export default function HomePage() {
   const navigate = useNavigate();
-  const { t, language, setLanguage } = useLanguage();
+  const { t } = useLanguage();
   const [searchQuery, setSearchQuery] = useState('');
 
   const filteredStores = availableStores.filter((store) => {
@@ -22,14 +22,9 @@ export default function HomePage() {
     );
   });
 
-  const langBtn = (active: boolean) =>
-    `min-h-[44px] min-w-[44px] px-3 flex items-center justify-center text-xs font-extrabold tracking-wider transition-colors duration-150 ease-out motion-reduce:transition-none ${
-      active ? 'bg-ink text-paper' : 'bg-card text-ink-soft hover:text-ink'
-    }`;
-
   return (
     <div className="px-5 pt-4 pb-6 space-y-6 animate-fadeIn">
-      {/* ── Testata: marchio e lingua ── */}
+      {/* ── Testata: marchio ── */}
       <header className="flex items-center justify-between">
         <div className="flex items-center gap-2.5">
           <LogoMark size={38} />
@@ -41,31 +36,6 @@ export default function HomePage() {
               {t('brandTagline')}
             </p>
           </div>
-        </div>
-
-        <div
-          role="group"
-          aria-label="Selezione lingua / Language selection"
-          className="flex items-stretch border border-ink rounded-md overflow-hidden"
-        >
-          <button
-            type="button"
-            onClick={() => setLanguage('it')}
-            aria-label="Italiano"
-            aria-pressed={language === 'it'}
-            className={langBtn(language === 'it')}
-          >
-            IT
-          </button>
-          <button
-            type="button"
-            onClick={() => setLanguage('en')}
-            aria-label="English"
-            aria-pressed={language === 'en'}
-            className={`${langBtn(language === 'en')} border-l border-ink`}
-          >
-            EN
-          </button>
         </div>
       </header>
 
